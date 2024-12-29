@@ -7,10 +7,15 @@ Additionally, the system includes an alarm feature that triggers a sound when a 
 **Key Features**
 
 **Fruit Disease Detection**: Identifies and classifies diseases in apples (e.g., Blotch Apple, Rot Apple, Scab Apple, Normal Apple) using a trained deep learning model.
+
 **Leaf Disease Detection:** Detects diseases in apple leaves (e.g., Rust, Scab, Powdery Mildew) using a TensorFlow Lite model.
+
 **Apple Quality Prediction:** Classifies apples as "Good" or "Bad" based on attributes such as size, weight, sweetness, crunchiness, juiciness, ripeness, and acidity.
+
 **Stock Price Prediction:** Predicts the future apple stock price using historical data and machine learning models.
+
 **Fertilizer Recommendations:** Provides fertilizer suggestions based on the detected diseases for both apple fruits and leaves.
+
 **Alarm System:** Triggers a sound alarm when a diseased apple or leaf is detected, helping farmers take early action before the situation worsens.
 
 **Technologies Used**
