@@ -1,4 +1,5 @@
 **Apple Disease Detection and Prediction System**
+
 This repository contains an Apple Disease Detection and Prediction System designed to assist farmers and agricultural experts in identifying apple diseases, predicting apple quality, and forecasting apple stock prices. The system uses machine learning and deep learning models to detect diseases in apples and apple leaves, evaluate fruit quality, and predict future apple prices.
 
 Additionally, the system includes an alarm feature that triggers a sound when a diseased apple or leaf is detected, helping farmers take early action to prevent further damage.
