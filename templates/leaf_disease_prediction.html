@@ -1,0 +1,147 @@
+{% extends 'base.html' %} {% block body %}
+
+<div id="sub-header">
+  <div id="sub-title">Leaf Disease Detection</div>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      {% for apple in apple_data %}
+        <div class="swiper-slide">
+            <div class="row slide-content">
+                <div class="col-md-4">
+                    <img src="{{ url_for('static', filename='/images/' + apple['image']) }}" alt="{{ apple['alt'] }}" />
+                </div>
+                <div class="col-md-8 slide-text">
+                    <h3>{{ apple['title'] }}</h3>
+                    <p>{{ apple['description'] }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+    <div class="swiper-pagination"></div>
+  </div>
+  <div id="camera-button">
+    <button id="open-camera" class="btn btn-primary tooltip-trigger" data-tip="Place the leaf in front of camera to get prediction">
+      Open Camera
+    </button>
+  </div>
+  <div id="camera-container"></div>
+  <div id="camera-image"></div>
+  <div id="prediction-model" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Prediction</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="prediction-text"></p>
+          <a id="learn-more-link" href="#" class="btn btn-primary">Fertilizer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var swiper = new Swiper(".swiper-container", {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+  
+  var openCameraBtn = document.getElementById("open-camera");
+  var cameraContainer = document.getElementById("camera-container");
+  var predictionModel = new bootstrap.Modal(document.getElementById("prediction-model"));
+
+  openCameraBtn.addEventListener("click", function () {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(function (stream) {
+        var video = document.createElement("video");
+        video.srcObject = stream;
+        video.play();
+        cameraContainer.appendChild(video);
+
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+
+        video.addEventListener("loadeddata", function () {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+
+          setTimeout(function () {
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+              context.drawImage(video, 0, 0, canvas.width, canvas.height);
+              var imageData = canvas.toDataURL("image/jpeg");
+              var cameraImage = document.getElementById("camera-image");
+              var capturedImage = document.createElement("img");
+              capturedImage.src = imageData;
+              cameraImage.appendChild(capturedImage);
+
+              //console.log(imageData);
+              // Send image data to the server using AJAX
+              fetch("/leaf_predict", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ image: imageData }),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.prediction) {
+                    console.log(data.prediction,data.fertilizer)
+                    // Play alarm sound
+                    if(['complex', 'frog_eye_leaf_spot', 'powdery_mildew', 'rust','scab'].includes(data.prediction)){
+                      var alarmSound = new Audio('static/alarm/alarm-1-with-reverberation-30031.mp3');
+                      alarmSound.loop = true;
+                      alarmSound.play();
+                    }
+
+                    // Show prediction model
+                    document.getElementById("prediction-text").innerText = data.prediction;
+                    var learnMoreLink = document.getElementById("learn-more-link");
+                    if (data.fertilizer) {
+                        // If there is a fertilizer link, set the href and show the "Learn More" button
+                        learnMoreLink.href = data.fertilizer;
+                        learnMoreLink.target = "_blank";
+                        learnMoreLink.style.display = "inline-block";
+                    } else {
+                        // If there is no fertilizer link, hide the "Learn More" button
+                        learnMoreLink.style.display = "none";
+                    }
+                    predictionModel.show();
+
+                    // Stop alarm sound when prediction model is closed
+                    window.onclick = function() {
+                      alarmSound.pause();
+                      alarmSound.currentTime = 0;
+                      window.onclick = null;
+                    };
+                  }
+                })
+                .catch((error) => {
+                  console.error(error)
+                })
+                .finally(() => {
+                    stream.getTracks().forEach((track) => track.stop());
+                    cameraContainer.removeChild(video);
+                });
+            }
+          }, 5000); // Delay for 3 seconds to allow the video to stabilize
+        });
+      })
+      .catch(function (error) {
+        alert("Error accessing camera: " + error.message);
+      });
+  });
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div id="card-container" class="row">
+
+    <div id="card" class="col-12 col-sm-4 col-lg-3 m-2">
+        <a href="{{ url_for('leaf_disease_prediction') }}">
+        <div id="desc">Leaf disease detection</div>
+        </a>
+    </div>
+
+    <div id="card" class="col-12 col-sm-4 col-lg-3 m-2" >
+        <a href="{{ url_for('fruit_disease_prediction') }}">
+        <div id="desc">Fruit disease detection</div>
+         </a>
+    </div>
+
+    <div id="card" class="col-12 col-sm-4 col-lg-3 m-2">
+        <a href="{{ url_for('fruit_quality_detection') }}">
+            <div id="desc">Fruit Quality detection</div>
+        </a>
+    </div>
+
+    <div id="card" class="col-12 col-sm-4 col-lg-3 m-2">
+        <a href="{{ url_for('stock_price_prediction') }}">
+        <div id="desc">Stock Price Prediction</div>
+        </a>
+    </div>
+
+    
+</div>
+
+{% endblock %}

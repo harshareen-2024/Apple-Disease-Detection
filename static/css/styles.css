@@ -1,0 +1,304 @@
+:root{
+    --primary-color:#D24545;
+    --secondary-color:white;
+}
+body{
+    font-family: "Poppins", sans-serif;
+    padding:10px;
+    
+}
+a{
+    text-decoration: none;
+}
+header {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  
+  #title ,#sub-title{
+    font-size: 25px;
+    letter-spacing: 0.1mm;
+    font-weight: bold;
+    color: red;
+  }
+
+#jumbotron {
+    background-image: url('../images/apple-image.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secondary-color);
+    text-align: center;
+  }
+  
+  #jumbotron h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  
+  #jumbotron p {
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+
+
+#card-container{
+    justify-content: center;
+    align-items: center;
+    
+}
+.row{
+    margin: 10px;
+}
+#card{
+    height: 250px;
+    border-radius: 15px;
+    background-color: var(--primary-color);
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#card #desc{
+    font-size: 22px;
+    color: var(--secondary-color);
+}
+
+#sub-title{
+    text-align: center;
+    margin-top: 20px;
+}
+
+  
+.swiper-container {
+    width: 100%;
+    height: 300px;
+    margin: 20px auto;
+
+}
+
+.swiper-slide {
+    display: flex!important;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: max-content!important;
+    
+}
+.slide-content {
+  text-align: center;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #F6FDC3;
+  padding: 10px;
+  box-shadow:  4px 4px 7px rgba(0, 0, 0, 0.5);
+}
+.slide-content img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px
+}
+
+.slide-text {
+    margin-top: 20px;
+}
+.slide-text h3{
+  color: #D04848;
+}
+.slide-text p{
+  font-size:20px;
+  margin-top:10px;
+  color:#FFA447;
+  font-weight: 500;
+}
+.swiper-pagination-bullets{
+ bottom: 0!important;
+ position: static!important;
+ padding-top: 20px!important;
+  
+}
+#camera-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.tooltip-trigger {
+  position: relative;
+}
+
+.tooltip-trigger:hover:after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.tooltip-trigger:hover:after::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  transform: translateX(-50%);
+}
+
+#camera-container{
+  border-radius: 20px;
+  text-align: center;
+  border-radius: 30px;
+  margin-top:20px
+}
+#camera-image {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px; /* Adjust the gap between images */
+}
+
+#camera-image img {
+  width: 300px; /* Set a fixed width for each image */
+  height: auto; /* Maintain aspect ratio */
+}
+  
+/* quality detection */
+
+#sub-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#form-info{
+  border-radius: 10px;
+  height: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  background-color: #FFA447;
+  width: 80%;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0px;
+  
+}
+#predictionForm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+form {
+  width: 450px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+label {
+  display: block;
+  color: #D04848;
+  margin-bottom: 5px;
+  letter-spacing: 0.3mm;
+}
+
+input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+#quality_detect_button{
+  width: 100%;
+  padding: 8px;
+  background-color: #FFA447;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#quality_detect_button:hover {
+  background-color: white;
+  border: 1px solid #FFA447;
+  color: #FFA447;
+}
+#quality-prediction {
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+
+#result, #summary {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+}
+
+#result {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+#summary {
+  font-style: italic;
+  color: #666;
+}
+
+/* Stock price prediction */
+#date-btn{
+  display: flex;
+  justify-content: center;
+}
+#date-btn button{
+  border: none;
+  margin: 5px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: rgb(208, 72, 72);
+  color: #ccc;
+}
+#chart{
+  height: 650px;
+}
+
+footer{
+  margin-top: 50px;
+  padding: 15px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+footer div{
+  display: flex;
+  justify-content: center;
+  color: var(--primary-color);
+  font-size: 25px;
+}

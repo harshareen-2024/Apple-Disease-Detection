@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block body %}
+<div id="sub-header">
+  <div id="sub-title">Stock Price Prediction</div>
+  <div class="input-container mt-4">
+    <label for="date">Enter Date:</label>
+    <input type="date" id="date">
+    <div id="date-btn" class="mt-3"><button onclick="predictStockPrice()" >Predict</button></div>
+  </div>
+  <div class="chart-container">
+    <canvas id="chart"></canvas>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function generateDates(startDate, count) {
+        const dates = [];
+        let currentDate = new Date(startDate);
+        for (let i = 0; i < count; i++) {
+            dates.push(new Date(currentDate).toISOString().slice(0, 10));
+            currentDate.setDate(currentDate.getDate() - 1);
+        }
+        return dates;
+    }
+function predictStockPrice() {
+    const dateInput = document.getElementById('date').value;
+    fetch('/predict_stock_price', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({future_date: dateInput})
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Process the prediction returned by the backend
+        console.log(data)
+        const prediction = data.prediction;
+        console.log('Predicted stock prices:', prediction);
+        // Update the chart with the prediction
+        const dates = generateDates(dateInput, 60);
+        updateChart(prediction, dates);
+
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function updateChart(prediction, dates) {
+    const ctx = document.getElementById('chart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates.reverse(),
+            datasets: [{
+                label: 'Stock Price Prediction',
+                data: prediction.reverse(),
+                backgroundColor: 'rgba(208, 72, 72, 0.2)',
+                borderColor: 'rgba(208, 72, 72, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x:{
+                    display:false
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+</script>
+
+{% endblock %}

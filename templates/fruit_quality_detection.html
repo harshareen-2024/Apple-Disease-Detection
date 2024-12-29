@@ -1,0 +1,62 @@
+{% extends 'base.html' %} 
+{% block body %}
+<div id="sub-header">
+  <div id="sub-title">Fruit Quality Detection</div>
+  <div id="form-info">
+      <div>Give the values for each field between -7 to +7 to get accurate prediction</div>
+  </div>
+  <div id="predictionForm">
+    <form id="form">
+      <label for="size">Size:</label>
+      <input type="text" id="size" name="size"><br><br>
+      
+      <label for="weight">Weight:</label>
+      <input type="text" id="weight" name="weight"><br><br>
+      
+      <label for="sweetness">Sweetness:</label>
+      <input type="text" id="sweetness" name="sweetness"><br><br>
+      
+      <label for="crunchiness">Crunchiness:</label>
+      <input type="text" id="crunchiness" name="crunchiness"><br><br>
+      
+      <label for="juiciness">Juiciness:</label>
+      <input type="text" id="juiciness" name="juiciness"><br><br>
+      
+      <label for="ripeness">Ripeness:</label>
+      <input type="text" id="ripeness" name="ripeness"><br><br>
+      
+      <label for="acidity">Acidity:</label>
+      <input type="text" id="acidity" name="acidity"><br><br>
+
+      <button id="quality_detect_button" 
+      type="submit">Predict</button>
+    </form>
+  </div>
+
+<div id="quality-prediction">
+  <div id="result"></div>
+  <div id="summary"></div>
+</div>
+</div>
+
+<script>
+  document.getElementById("form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form from submitting
+      const formData = new FormData(this);
+      fetch("/quality_predict", {
+          method: "POST",
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          document.getElementById("result").innerHTML = data.prediction;
+          if(data.prediction=="Good")
+            document.getElementById("summary").innerHTML = "These features are good and the apple is likely to be firm, crisp, and flavorful. Enjoy!";
+          else
+            document.getElementById("summary").innerHTML = "To improve the quality of apples, consider popular fertilizers such as \"Miracle-Gro Water Soluble All Purpose Plant Food,\" \"Jobe's Organics Fruit & Citrus Fertilizer Spikes,\" and \"Espoma Organic Tree-Tone Fruit Tree Fertilizer\". Apply these fertilizers according to the manufacturer's instructions in the spring or fall for best results."      
+      })
+      .catch(error => console.error("Error:", error));
+  });
+</script>
+
+{% endblock %}
